@@ -72,6 +72,7 @@ def getFuelType(nn)
         $fuelSuperFinal.pop(6)
     return $fuelSuperFinal[nn]
 end
+
 # def getModel()
     # doc = Nokogiri::HTML.parse($html)
     # docText = doc.text
@@ -80,7 +81,8 @@ end
 # 
 # end
 
-CSV.open("results.csv", "w") do |csv|
+headers = ["Brand", "Title", "Year", "Fuel"]
+CSV.open("results.csv", "w", write_headers: true, headers: headers) do |csv|
 
 while $pageVar<=5
     n=0
@@ -88,7 +90,6 @@ while $pageVar<=5
         car1 = Car.new(getBrand(n), getTitle(n), getYear(n), getFuelType(n))
         brand2 = car1.returnBrand.tr('"', '').tr('[', '').tr(']','')
         fuel2 = car1.returnFuel.tr('"', '').tr('[', '').tr(']','')
-
         row = [brand2, car1.returnTitle, car1.returnYear, fuel2]
         csv << row
         n += 1
